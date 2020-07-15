@@ -6,9 +6,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.stereotype.Repository;
 
 import com.boot.bookingrestaurantapi.entities.Reservation;
 
+@Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 	Optional<Reservation> findById(Long id);
 
@@ -18,7 +20,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 	@Transactional
 	Optional<Reservation> deleteByLocator(String locator);
 
-	Optional<Reservation> findByTurnAndRestauraurantId(String turn,Long restaurantId);
-	
+	Optional<Reservation> findByTurnAndRestauraurantId(String turn, Long restaurantId);
 
 }
