@@ -24,6 +24,9 @@ public class Reservation {
 	@Column(name = "LOCATION")
 	private String locator;
 
+	@Column(name = "TURN")
+	private String turn;
+
 	@Column(name = "PERSON")
 	private String person;
 
@@ -73,7 +76,13 @@ public class Reservation {
 	public void setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
 	}
-	
-	
+
+	public String getTurn() {
+		return turn;
+	}
+
+	public void setTurn(String turn) {
+		this.turn = turn;
+	}
 
 }
