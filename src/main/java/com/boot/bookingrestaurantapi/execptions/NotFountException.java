@@ -1,4 +1,4 @@
-package com.boot.bookingrestaurantapi.execeptions;
+package com.boot.bookingrestaurantapi.execptions;
 
 import java.util.Arrays;
 
@@ -14,12 +14,9 @@ public class NotFountException extends BookingException {
 		super(code, HttpStatus.NOT_FOUND.value(), message);
 	}
 
-	public NotFountException(String code, String message, ErrorDto data) {
-		super(code, HttpStatus.NOT_FOUND.value(), message, Arrays.asList(data));
-	}
-
-	/**
-	 * 
-	 */
+	
+	 public NotFountException(String code, String message, ErrorDto data) {
+	 super(code, HttpStatus.NOT_FOUND.value(), message, Arrays.asList(data)); }
+	 
 
 }
