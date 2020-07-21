@@ -12,6 +12,7 @@ import com.boot.bookingrestaurantapi.services.RestaurantService;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.Collectors;
 
 public class RestaurantServiceImpl implements RestaurantService {
 
@@ -25,10 +26,16 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 	}
 
+	public List<RestaurantRest> getRestaurants() throws BookingException {
+		final List<Restaurant> restaurantsEntity = restaurantRepository.findAll();
+		return restaurantsEntity.stream().map(service -> modelMapper.map(service, RestaurantRest.class))
+				.collect(Collectors.toList());
+	}
+
 	private Restaurant getRestaurantEntity(Long restaurantId) throws BookingException {
 		return restaurantRepository.findById(restaurantId)
 				.orElseThrow(() -> new NotFountException("SNOT-404-1", "RESTAURANT_NOT_FOUND"));
-			
+
 	}
 
 }
