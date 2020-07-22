@@ -7,17 +7,23 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.boot.bookingrestaurantapi.entities.Reservation;
+import com.boot.bookingrestaurantapi.entities.Restaurant;
+import com.boot.bookingrestaurantapi.entities.Turn;
 import com.boot.bookingrestaurantapi.execptions.BookingException;
 import com.boot.bookingrestaurantapi.execptions.NotFountException;
 import com.boot.bookingrestaurantapi.jsons.CreateReservationRest;
 import com.boot.bookingrestaurantapi.jsons.ReservationRest;
 import com.boot.bookingrestaurantapi.repositories.ReservationRepository;
+import com.boot.bookingrestaurantapi.repositories.RestaurantRepository;
+import com.boot.bookingrestaurantapi.repositories.TurnRepository;
 import com.boot.bookingrestaurantapi.services.ReservationService;
 
 public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
 	ReservationRepository reservationRepository;
+	private RestaurantRepository restaurantRepository;
+	private TurnRepository turnRepository;
 
 	public static final ModelMapper modelMapper = new ModelMapper();
 
@@ -32,17 +38,30 @@ public class ReservationServiceImpl implements ReservationService {
 	 * ReservationRest.class)) .collect(Collectors.toList()); }
 	 */
 
-	@Override
 	public String createReservation(CreateReservationRest createReservationRest) throws BookingException {
-		// TODO Auto-generated method stub
+		final Restaurant restaurantId = restaurantRepository.findById(createReservationRest.getRestaurantId())
+				.orElseThrow(() -> new NotFountException("RESTAURANT_NOT_FOUND", "RESTAURANT_NOT_FOUND"));
+		final Turn turnId = turnRepository.findById(createReservationRest.getTurnId())
+				.orElseThrow(() -> new NotFountException("TURN_NOT_FOUND", "TURN_NOT_FOUND"));
+		String locator = generateLocator(restaurantId, createReservationRest);
+		final Reservation reservation = new Reservation();
+		reservation.setLocator(locator);
+		reservation.setPerson(createReservationRest.getPerson());
+		reservation.setDate(createReservationRest.getDate());
+		reservation.setRestaurant(restaurantId);
+		reservation.setTurn(turnId);
 		return null;
 	}
 
 	private Reservation getReservationEntity(Long reservationId) throws BookingException {
 		return reservationRepository.findById(reservationId)
 				.orElseThrow(() -> new NotFountException("SNOT-404-1", "RESERVATION_NOT_FOUND"));
-
 	}
 
+	private String generateLocator(Restaurant restaurantId, CreateReservationRest createReservationRest)
+			throws BookingException {
+		return restaurantId.getName() + createReservationRest.getTurnId();
+
+	}
 
 }
