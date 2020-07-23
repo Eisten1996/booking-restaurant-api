@@ -1,7 +1,11 @@
 package com.boot.bookingrestaurantapi.services.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.boot.bookingrestaurantapi.entities.Restaurant;
 import com.boot.bookingrestaurantapi.execptions.BookingException;
@@ -10,12 +14,9 @@ import com.boot.bookingrestaurantapi.jsons.RestaurantRest;
 import com.boot.bookingrestaurantapi.repositories.RestaurantRepository;
 import com.boot.bookingrestaurantapi.services.RestaurantService;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
+@Service
 public class RestaurantServiceImpl implements RestaurantService {
 
-	@Autowired
 	RestaurantRepository restaurantRepository;
 
 	public static final ModelMapper modelMapper = new ModelMapper();
