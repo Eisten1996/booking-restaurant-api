@@ -1,4 +1,4 @@
-package com.boot.bookingrestaurantapi.execeptions;
+package com.boot.bookingrestaurantapi.execptions;
 
 import java.util.Arrays;
 
